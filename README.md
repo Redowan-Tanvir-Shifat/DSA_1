@@ -1,2 +1,2 @@
-# DSA-_LAB_1
+# DSA_1_LAB
 For academic purpose...

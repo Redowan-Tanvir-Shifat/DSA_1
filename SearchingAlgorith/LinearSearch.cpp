@@ -12,10 +12,10 @@ int linearSearch(int arr[], int size, int key) {
 }
 
 int main() {
-    int arr[10] = {2, 3, 4, 6, 67, 0, 78, 98, 8, 6};
+    int arr[10] = {9, 6, 7, 8, 4, 5, 12, 17, 13, 1};
     int size = sizeof(arr) / sizeof(arr[0]);
 
-    int key; // The value we will be searching from the given array...
+    int key; // We need to search this value from the given array...
     cout << "Enter a number for the key value: ";
     cin >> key;
 

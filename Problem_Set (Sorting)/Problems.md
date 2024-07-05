@@ -1,6 +1,5 @@
 # Practice Problems (Sorting)
 
-This repository contains a set of practice problems related to sorting algorithms. Each problem focuses on a different aspect of sorting or related operations on arrays.
 
 ## Problem List
 

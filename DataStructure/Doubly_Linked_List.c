@@ -2,6 +2,7 @@
 #include<stdlib.h>
 
 struct node {
+    struct node *prev; 
     int data;
     struct node *next;
 } *head = NULL;
@@ -9,6 +10,7 @@ struct node {
 
 struct node *createNewNode(int x) {
     struct node *newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->prev = NULL;
     newnode->data = x;
     newnode->next = NULL;
     return newnode;
@@ -16,9 +18,16 @@ struct node *createNewNode(int x) {
 
 
 void insertBeginning(int key) {
-    struct node *newnode = createNewNode(key);
-    newnode->next = head;
-    head = newnode;
+    if(head == NULL) {
+        struct node *newnode = createNewNode(key);\
+        head = newnode;
+    }
+    else {
+        struct node *newnode = createNewNode(key);
+        newnode->next = head;
+        head->prev = newnode;
+        head = newnode;
+    }
 }
 
 
@@ -37,6 +46,7 @@ void insertLast(int key) {
 
         // Now t is the last node
         t->next = newnode;
+        newnode->prev = t;
     }
 }
 
@@ -62,7 +72,9 @@ void insertAt(int key, int pos) {
         if(t != NULL) {
             struct node *newnode = createNewNode(key);
             newnode->next = t->next;
+            t->next->prev = newnode;
             t->next = newnode;
+            newnode->prev = t;
         }
         else {
             printf("Position exceeds the length of the list. %d is not inserted.\n", key);
@@ -77,9 +89,10 @@ void deleteFirst() {
         printf("List is empty. Nothing to delete\n");
         return;
     }
-    struct node *t = head;
+
     head = head->next;
-    free(t);
+    free(head->prev);
+    head->prev = NULL;
 }
 
 
@@ -95,13 +108,13 @@ void deleteLast() {
     }
     else {
         struct node *t = head;
-        // Find the 2nd last node
-        while(t->next->next != NULL){
+    
+        while(t->next != NULL){
             t = t->next;
         }
-        // t is the 2nd last node. last node is t->next
-        free(t->next);  //delete last node
-        t->next = NULL;  //set the next of 2nd last node as NULL
+
+        t->prev->next = NULL;
+        free(t);
     }
 }
 
@@ -116,6 +129,7 @@ void deleteAt(int pos) {
     else {
         int current_position = 0;
         struct node *current = head;
+
         while(current != NULL && current_position < pos-1) {
             current = current->next;
             current_position++;
@@ -126,6 +140,7 @@ void deleteAt(int pos) {
         }
         else {
             struct node *t = current->next;
+            // t->next->prev = current;
             current->next = t->next;
             free(t);
         }
@@ -151,7 +166,46 @@ int search(int x) {
 }
 
 
-void printList() {
+int findMax() {
+    if(head == NULL) {
+        return -1;
+    }
+    
+    struct node *current = head;
+    int max = current->data;
+
+    while(current != NULL){
+        if(current->data > max) {
+            max = current->data;
+
+        }
+        current = current->next;
+    }
+
+    return max; 
+}
+
+int findMin() {
+    if(head == NULL) {
+        return -1;
+    }
+    
+    struct node *current = head;
+    int min = current->data;
+
+    while(current != NULL){
+        if(current->data < min) {
+            min = current->data;
+
+        }
+        current = current->next;
+    }
+
+    return min; 
+}
+
+
+void displayList() {
     printf("Linked list: ");
     struct node *t = head;
 
@@ -165,7 +219,7 @@ void printList() {
 
 int main() {
     int choice, key, pos;
-    printf("1.insert first 2.insert last 3.insert at 4.delete first 5.delete last 6.delete at 7.search 8.exit\n");
+    printf("1.insert first 2.insert last 3.insert at 4.delete first 5.delete last 6.delete at 7.search 8.FindMax 9.FindMin 10.DisplayList\n");
 
     while(1){
         printf("enter choice: ");
@@ -210,10 +264,34 @@ int main() {
                 printf("The key is found at: %d\n", idx);
             }
         }
+        else if(choice == 8) {
+            int max = findMax();
+
+            if(max == -1) {
+                printf("List is empty.\n"); 
+            }
+            else {
+                printf("Max element: %d\n", max);
+            }
+        }
+        else if(choice == 9) {
+            int min = findMin();
+
+            if(min == -1) {
+                printf("List is empty.\n"); 
+            }
+            else {
+                printf("Min element: %d\n", min);
+            }
+        }
+        else if(choice == 10) {
+            displayList();
+        }
         else{
             break;
         }
-        printList();
+
+        // displayList();
         printf("\n");
     }
 }

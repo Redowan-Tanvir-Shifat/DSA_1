@@ -291,7 +291,7 @@ int main() {
             break;
         }
 
-        // displayList();
+        displayList();
         printf("\n");
     }
 }

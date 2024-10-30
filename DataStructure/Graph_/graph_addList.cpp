@@ -1,15 +1,13 @@
 #include<iostream>
 using namespace std;
 
-struct node
-{
+struct node {
     int value;
     node *next;
 };
 
-node * createNewnode(int x)
-{
-    node *newnode=new node();
+node* createNewnode(int x) {
+    node *newnode = new node();
     newnode->value = x;
     newnode->next = NULL;
     return newnode;
@@ -20,38 +18,37 @@ class Graph {
     bool directed;
     node **adjList;
 public:
-    Graph(int n, bool dir)
-    {
-        nVertices=n;
+    Graph(int n, bool dir) {
+        nVertices = n;
         directed = dir;
+        adjList = new node*[n];
 
-        adjList=new node*[n];
-        for(int i=0; i<nVertices; i++)
-        {
-            adjList[i]=NULL;
+        for(int i = 0; i < nVertices; i++) {
+            adjList[i] = NULL;
         }
     }
 
-    void addEdge(int u, int v)
-    {
-        if(u<0 || v<0 || u>=nVertices || v>=nVertices) return;
+    void addEdge(int u, int v) {
+        if(u < 0 || v < 0 || u >= nVertices || v >= nVertices) return;
 
-        node * newnode = createNewnode(v);
+        node* newnode = createNewnode(v);
+
         //check if list of u is empty
-        if(adjList[u] == NULL ){
-            adjList[u]=newnode;
+        if(adjList[u] == NULL) { 
+            adjList[u] = newnode;
         }
-        else{
+        else {
             newnode->next = adjList[u];
             adjList[u] = newnode;
         }
 
-        if ( ! directed ){
+        if (!directed) {
             //add u to the list of v
-            node * newnode1 = createNewnode(u);
+            node* newnode1 = createNewnode(u);
+
             //check if list of v is empty
             if(adjList[v] == NULL ){
-                adjList[v]=newnode1;
+                adjList[v] = newnode1;
             }
             else{
                 newnode1->next = adjList[v];
@@ -59,25 +56,23 @@ public:
             }
         }
     }
+    
     void display(){
-        cout<<"Displaying list:"<<endl;
+        cout << "Displaying list:" << endl;
 
-        for(int u=0; u<nVertices; u++){
-            cout<<u<<" : ";
-            node *current= adjList[u];
-            while(current!=NULL){
-                cout<<current->value<<", ";
-                current=current->next;
+        for(int u = 0; u < nVertices; u++) {
+            cout << u <<" : ";
+            node* current = adjList[u];
+            while(current != NULL) {
+                cout << current->value << ", ";
+                current = current->next;
             }
-            cout<<endl;
+            cout << endl;
         }
     }
-
-
 };
 
-int main()
-{
+int main() {
     Graph g(5, false);
 
     g.addEdge(0,1);
@@ -90,8 +85,3 @@ int main()
 
     g.display();
 }
-
-
-
-
-

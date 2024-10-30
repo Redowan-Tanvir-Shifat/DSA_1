@@ -39,7 +39,6 @@ class Stack{
         }
 
         void push(int x) {
-
             if(isFull()) {
                 n += 2;
                 int *temp = new int[n];

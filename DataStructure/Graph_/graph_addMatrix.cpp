@@ -4,45 +4,45 @@ using namespace std;
 class Graph {
     int nVertices;
     int **matrix;
-    bool directed;//directed->true, undirected->false
+    bool directed;  //directed->true, undirected->false
 public:
     Graph(int n, bool dir){
         nVertices = n;
         directed = dir;
-        matrix=new int*[n];//stores the address of each row
+        matrix = new int*[n];  //stores the address of each row
 
-        for(int i=0;i<n;i++)
-            matrix[i]=new int[n];//each row contains n integers
+        for(int i = 0; i < n; i++)
+            matrix[i] = new int[n];  //each row contains n integers
 
         //initialize all cell with 0
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
                 matrix[i][j] = 0;
             }
         }
     }
 
     void addEdge(int u, int v){
-        if(u<0 || v<0 || u>=nVertices || v>=nVertices) return;
+        if(u < 0 || v < 0 || u >= nVertices || v >= nVertices) return;
 
         matrix[u][v] = 1;
-        if( ! directed ) matrix[v][u] = 1;
+        if(!directed) matrix[v][u] = 1;
 
     }
 
     bool isEdge(int u, int v){
-        if(u<0 || v<0 || u>=nVertices || v>=nVertices) return false;
+        if(u < 0 || v < 0 || u >= nVertices || v >= nVertices) return false;
         if(matrix[u][v] == 1) return true;
         else return false;
     }
 
-    void display(){
-        cout<<"Displaying Graph:"<<endl;
-        for(int u=0; u<nVertices; u++){
-            cout<<u<<" : ";
-            for(int v=0; v<nVertices ;v++){
-                if ( isEdge(u,v) ){
-                    cout<<v<<", ";
+    void display() {
+        cout << "Displaying Graph:" << endl;
+        for(int u = 0; u < nVertices; u++) {
+            cout << u <<" : ";
+            for(int v = 0; v < nVertices; v++) {
+                if (isEdge(u,v)){
+                    cout << v <<", ";
                 }
             }
             cout<<endl;
@@ -50,7 +50,7 @@ public:
     }
 };
 
-int main(){
+int main() {
     Graph g(5, false);
 
     g.addEdge(0,1);

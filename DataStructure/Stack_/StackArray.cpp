@@ -50,7 +50,7 @@ class Stack{
 
         int pop() {
             if(isEmpty()) {
-                cout << "Stack is full" << endl;
+                cout << "Stack is empty" << endl;
                 return INT_MAX;
             }
             else {
